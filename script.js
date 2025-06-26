@@ -24,6 +24,12 @@ function playGame() {
 
   function playRound(humanChoice, computerChoice) {
     let humanValue = humanChoice.toLowerCase();
+    const resultSection = document.getElementById("results");
+    const scoreSection = document.getElementById("score");
+
+    if (humanScore >= 5 || computerScore >= 5) {
+      return;
+    }
 
     if (
       (humanChoice === "rock" && computerChoice === "scissors") ||
@@ -31,18 +37,40 @@ function playGame() {
       (humanChoice === "scissors" && computerChoice === "paper")
     ) {
       humanScore++;
-      console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+      resultSection.innerHTML += `You win! ${humanChoice} beats ${computerChoice}`;
     } else {
       computerScore++;
-      console.log(`You loose! ${computerChoice} beats ${humanChoice}`);
+      resultSection.innerHTML += `You loose! ${computerChoice} beats ${humanChoice}`;
+    }
+
+    scoreSection.innerHTML += `Human: ${humanScore} | Computer: ${computerScore}`;
+
+    if (humanScore == 5 || computerScore == 5) {
+      let winner;
+      if (humanScore == 5) {
+        winner = "Human";
+      } else {
+        winner = "Computer";
+        resultSection.innerHTML += `${winner} wins the game`;
+      }
     }
   }
 
-  playRound(getHumanChoice(), getComputerChoice());
-  playRound(getHumanChoice(), getComputerChoice());
-  playRound(getHumanChoice(), getComputerChoice());
-  playRound(getHumanChoice(), getComputerChoice());
-  playRound(getHumanChoice(), getComputerChoice());
+  document.getElementById("rock").addEventListener("click", () => {
+    playRound("rock", getComputerChoice());
+  });
+  document.getElementById("paper").addEventListener("click", () => {
+    playRound("paper", getComputerChoice());
+  });
+  document.getElementById("scissors").addEventListener("click", () => {
+    playRound("scissors", getComputerChoice());
+  });
+
+  //   playRound(getHumanChoice(), getComputerChoice());
+  //   playRound(getHumanChoice(), getComputerChoice());
+  //   playRound(getHumanChoice(), getComputerChoice());
+  //   playRound(getHumanChoice(), getComputerChoice());
+  //   playRound(getHumanChoice(), getComputerChoice());
 }
 
 playGame();
